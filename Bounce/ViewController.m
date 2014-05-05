@@ -8,9 +8,34 @@
 
 #import "ViewController.h"
 #import "MyScene.h"
+#import "StartGame.h"
 
 @implementation ViewController
 
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    
+    SKView * skView = (SKView *)self.view;
+    
+    if (!skView.scene) {
+        skView.showsFPS = YES;
+        skView.showsNodeCount = YES;
+        
+        // Create and configure the scene.
+        SKScene * scene = [StartGame sceneWithSize:skView.bounds.size];
+        //SKScene * scene = [MyScene sceneWithSize:skView.bounds.size];
+        scene.scaleMode = SKSceneScaleModeAspectFill;
+        
+        // Present the scene.
+        [skView presentScene:scene];
+    }
+}
+
+-(BOOL)prefersStatusBarHidden{
+    return YES;
+}
+
+/*
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,7 +52,18 @@
     // Present the scene.
     [skView presentScene:scene];
 }
-
+*/
+/*
+- (IBAction)StartGame:(id)sender {
+    SKView * skView = (SKView *)self.view;
+    SKScene * scene = [MyScene sceneWithSize:skView.bounds.size];
+ 
+    SKScene *myScene = [[MyScene alloc] initWithSize:self.size];
+     
+    SKTransition *reveal = [SKTransition fadeWithDuration:0.5];
+    [skView presentScene:scene transition:reveal];
+}
+*/
 - (BOOL)shouldAutorotate
 {
     return YES;
