@@ -1,29 +1,25 @@
 //
-//  MyScene.m
+//  Frozen.m
 //  Bounce
 //
 //  Created by Andrea Compton on 4/10/14.
 //  Copyright (c) 2014 Bounce. All rights reserved.
 //
 
-#import "MyScene.h"
+#import "Frozen.h"
 #import "GameOver.h"
 
 SKLabelNode *_lblScore;
 SKLabelNode *_lblLife;
-BOOL gameOver = NO;
-static const uint32_t shipCategory =  0x1 << 0;
+BOOL gameOverFrozen = NO;
+static const uint32_t elsaCategory =  0x1 << 0;
 static const uint32_t obstacleCategory =  0x1 << 1;
-static const uint32_t butterflyCategory = 0x1 << 2;
+static const uint32_t olafCategory = 0x1 << 2;
 
 static const float BG_VELOCITY = 35.0;
-static const float BIRD_VELOCITY = 225.0;
+static const float ice_VELOCITY = 225.0;
 static const float SPEED = 2;
 
-static NSString* ballCategoryName = @"ball";
-
-
-//static const float OBJECT_VELOCITY = 160.0;
 
 static inline CGPoint CGPointAdd(const CGPoint a, const CGPoint b)
 {
@@ -35,27 +31,25 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     return CGPointMake(a.x * b, a.y * b);
 }
 
-@implementation MyScene {
+@implementation Frozen {
     
-    SKSpriteNode *ship;
+    SKSpriteNode *elsa;
     SKAction *actionMoveUp;
     SKAction *actionMoveDown;
     
     NSTimeInterval _lastUpdateTime;
     NSTimeInterval _dt;
-    NSTimeInterval _lastBirdAdded;
+    NSTimeInterval _lasticeAdded;
     
 }
 
--(id)initWithSize:(CGSize)size {    
+-(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
-        NSString* title = @"tigger";
-       // self.backgroundColor = [SKColor whiteColor];
-        [self initalizingScrollingBackground];
-        [self addShip:title];
-        //[self addFloor];
-       // [self addBall];
+       
+        [self initalizingScrollingBackgroundFrozen];
+        [self addElsa];
+        
         //Making self delegate of physics World
         self.physicsWorld.gravity = CGVectorMake(0,-5);
         self.physicsWorld.contactDelegate = self;
@@ -63,11 +57,11 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
         //self.score = 0;
         [GameState sharedInstance].score = 0;
         [GameState sharedInstance].life = 100;
-        gameOver = NO;
+        gameOverFrozen = NO;
         
         _lblLife = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
         _lblLife.fontSize = 30;
-        _lblLife.fontColor = [SKColor greenColor];
+        _lblLife.fontColor = [SKColor blackColor];
         _lblLife.position = CGPointMake(20, self.size.height-40);
         _lblLife.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         [_lblLife setText:[NSString stringWithFormat:@"Life: %d", [GameState sharedInstance].life]];
@@ -75,13 +69,13 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
         
         _lblScore = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
         _lblScore.fontSize = 30;
-        _lblScore.fontColor = [SKColor greenColor];
+        _lblScore.fontColor = [SKColor blackColor];
         _lblScore.position = CGPointMake(self.size.width-20, self.size.height-40);
         _lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
         // 5
         [_lblScore setText:@"0"];
         [self addChild:_lblScore];
-     
+        
         //[self addChild:[self createFloor]];
         //[self addChild:[self createBall:CGPointMake(50, 50)]];
     }
@@ -89,101 +83,96 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     return self;
 }
 
--(void)addShip:(NSString*)title
+-(void)addElsa
 {
-    //initalizing spaceship node
-    if ([title  isEqual: @"tigger"]) {
-        ship = [SKSpriteNode spriteNodeWithImageNamed:@"tigger.png"];
-        [ship setScale:0.15];
-    }
-    ship = [SKSpriteNode spriteNodeWithImageNamed:@"tigger.png"];
-    [ship setScale:0.15];
+    elsa = [SKSpriteNode spriteNodeWithImageNamed:@"elsa.png"];
+    [elsa setScale:0.15];
     //Adding SpriteKit physicsBody for collision detection
-    ship.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:ship.size];
-
-    ship.physicsBody.categoryBitMask = shipCategory;
-    ship.physicsBody.dynamic = YES;
-    ship.physicsBody.contactTestBitMask = obstacleCategory | butterflyCategory;
-    ship.physicsBody.collisionBitMask = 0;
-    ship.physicsBody.usesPreciseCollisionDetection = YES;
-    ship.physicsBody.velocity = CGVectorMake(-1, -3);
-    ship.physicsBody.mass = 30;
-    ship.physicsBody.restitution=1;
-    ship.physicsBody.linearDamping=0;
-    ship.physicsBody.angularDamping=0;
-    ship.name = @"ship";
-    ship.position = CGPointMake(self.size.width/3,self.size.height);
+    elsa.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:elsa.size];
+    
+    elsa.physicsBody.categoryBitMask = elsaCategory;
+    elsa.physicsBody.dynamic = YES;
+    elsa.physicsBody.contactTestBitMask = obstacleCategory | olafCategory;
+    elsa.physicsBody.collisionBitMask = 0;
+    elsa.physicsBody.usesPreciseCollisionDetection = YES;
+    elsa.physicsBody.velocity = CGVectorMake(-1, -3);
+    elsa.physicsBody.mass = 30;
+    elsa.physicsBody.restitution=1;
+    elsa.physicsBody.linearDamping=0;
+    elsa.physicsBody.angularDamping=0;
+    elsa.name = @"elsa";
+    elsa.position = CGPointMake(self.size.width/3,self.size.height);
     actionMoveUp = [SKAction speedBy:SPEED duration:.8];
     actionMoveDown = [SKAction speedBy:-SPEED duration:.8];
     
-    [self addChild:ship];
+    [self addChild:elsa];
 }
 
 
--(void)addBird
+-(void)addice
 {
-    //initalizing spaceship node
-    SKSpriteNode *bird;
-    bird = [SKSpriteNode spriteNodeWithImageNamed:@"bee.png"];
-    [bird setScale:0.05];
+    //initalizing spaceelsa node
+    SKSpriteNode *ice;
+    ice = [SKSpriteNode spriteNodeWithImageNamed:@"ice.png"];
+    [ice setScale:0.3];
     
     //Adding SpriteKit physicsBody for collision detection
-    bird.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bird.size];
-    bird.physicsBody.categoryBitMask = obstacleCategory;
-    bird.physicsBody.dynamic = NO;
-    //bird.physicsBody.velocity = CGVectorMake(-10, 0);
-    bird.physicsBody.contactTestBitMask = shipCategory;
-    bird.physicsBody.collisionBitMask = 0;
-    bird.physicsBody.usesPreciseCollisionDetection = YES;
-    bird.name = @"bird";
+    ice.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:ice.size];
+    ice.physicsBody.categoryBitMask = obstacleCategory;
+    ice.physicsBody.dynamic = NO;
+    //ice.physicsBody.velocity = CGVectorMake(-10, 0);
+    ice.physicsBody.contactTestBitMask = elsaCategory;
+    ice.physicsBody.collisionBitMask = 0;
+    ice.physicsBody.usesPreciseCollisionDetection = YES;
+    ice.name = @"ice";
     
     //selecting random y position for missile
     int r = arc4random() % 300;
-    bird.position = CGPointMake(self.frame.size.width + 20,r);
+    ice.position = CGPointMake(self.frame.size.width + 20,r);
     
-    [self addChild:bird];
+    [self addChild:ice];
 }
 
--(void)addButterfly
+-(void)addOlaf
 {
-    //initalizing spaceship node
-    SKSpriteNode *butterfly;
-    butterfly = [SKSpriteNode spriteNodeWithImageNamed:@"honey.png"];
-    [butterfly setScale:0.15];
+    //initalizing spaceelsa node
+    SKSpriteNode *olaf;
+    olaf = [SKSpriteNode spriteNodeWithImageNamed:@"olaf.png"];
+    [olaf setScale:0.10];
     
     //Adding SpriteKit physicsBody for collision detection
-    butterfly.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:butterfly.size];
-    butterfly.physicsBody.categoryBitMask = butterflyCategory;
-    butterfly.physicsBody.dynamic = NO;
-    //bird.physicsBody.velocity = CGVectorMake(-10, 0);
-    butterfly.physicsBody.contactTestBitMask = shipCategory;
-    butterfly.physicsBody.collisionBitMask = 0;
-    butterfly.physicsBody.usesPreciseCollisionDetection = YES;
-    butterfly.name = @"butterfly";
+    olaf.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:olaf.size];
+    olaf.physicsBody.categoryBitMask = olafCategory;
+    olaf.physicsBody.dynamic = NO;
+    //ice.physicsBody.velocity = CGVectorMake(-10, 0);
+    olaf.physicsBody.contactTestBitMask = elsaCategory;
+    olaf.physicsBody.collisionBitMask = 0;
+    olaf.physicsBody.usesPreciseCollisionDetection = YES;
+    olaf.name = @"olaf";
     
     //selecting random y position for missile
     int r = arc4random() % 300;
-    butterfly.position = CGPointMake(self.frame.size.width + 20,r);
+    olaf.position = CGPointMake(self.frame.size.width + 20,r);
     
-    [self addChild:butterfly];
+    [self addChild:olaf];
 }
 
--(void)initalizingScrollingBackground
+-(void)initalizingScrollingBackgroundFrozen
 {
     for (int i = 0; i < 2; i++) {
-        SKSpriteNode *bg = [SKSpriteNode spriteNodeWithImageNamed:@"Landscape"];
+        SKSpriteNode *bg = [SKSpriteNode spriteNodeWithImageNamed:@"frozen"];
         //[bg setScale:0.5];
         bg.position = CGPointMake(i * bg.size.width, 0);
         bg.anchorPoint = CGPointZero;
-        bg.name = @"bg";
+        bg.name = @"frozen";
         [self addChild:bg];
     }
     
 }
 
-- (void)moveBg
+- (void)moveBgFrozen
 {
-    [self enumerateChildNodesWithName:@"bg" usingBlock: ^(SKNode *node, BOOL *stop)
+    [self enumerateChildNodesWithName:@"frozen" usingBlock: ^(SKNode *node, BOOL *stop)
      {
          SKSpriteNode * bg = (SKSpriteNode *) node;
          CGPoint bgVelocity = CGPointMake(-BG_VELOCITY, 0);
@@ -198,7 +187,7 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
          }
      }];
     
-    [self enumerateChildNodesWithName:@"butterfly" usingBlock: ^(SKNode *node, BOOL *stop)
+    [self enumerateChildNodesWithName:@"olaf" usingBlock: ^(SKNode *node, BOOL *stop)
      {
          SKSpriteNode * fly = (SKSpriteNode *) node;
          CGPoint flyVelocity = CGPointMake(-BG_VELOCITY, 0);
@@ -208,17 +197,17 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
 }
 
 
--(void)moveBirds
+-(void)moveice
 {
-    [self enumerateChildNodesWithName:@"bird" usingBlock: ^(SKNode *node, BOOL *stop)
+    [self enumerateChildNodesWithName:@"ice" usingBlock: ^(SKNode *node, BOOL *stop)
      {
-         SKSpriteNode * bird = (SKSpriteNode *) node;
-         CGPoint birdVelocity = CGPointMake(-BIRD_VELOCITY, 0);
-         CGPoint amtToMove = CGPointMultiplyScalar(birdVelocity,_dt);
-         bird.position = CGPointAdd(bird.position, amtToMove);
-         if(bird.position.x < -100)
+         SKSpriteNode * ice = (SKSpriteNode *) node;
+         CGPoint iceVelocity = CGPointMake(-ice_VELOCITY, 0);
+         CGPoint amtToMove = CGPointMultiplyScalar(iceVelocity,_dt);
+         ice.position = CGPointAdd(ice.position, amtToMove);
+         if(ice.position.x < -100)
          {
-             [bird removeFromParent];
+             [ice removeFromParent];
          }
      }];
 }
@@ -228,7 +217,7 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     CGPoint touchLocation = [touch locationInNode:self.scene];
     NSInteger dif = self.size.height - touchLocation.y;
     
-    [self enumerateChildNodesWithName:@"ship" usingBlock:^(SKNode *node, BOOL *stop) {
+    [self enumerateChildNodesWithName:@"elsa" usingBlock:^(SKNode *node, BOOL *stop) {
         node.physicsBody.velocity = CGVectorMake(0, node.physicsBody.velocity.dy + dif);
         if (node.position.y > self.size.height) {
             node.position = CGPointMake(self.size.width/3, self.size.height);
@@ -238,8 +227,8 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    if (gameOver) return;
-
+    if (gameOverFrozen) return;
+    
     if (_lastUpdateTime)
     {
         _dt = currentTime - _lastUpdateTime;
@@ -250,22 +239,21 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     }
     _lastUpdateTime = currentTime;
     
-    if( currentTime - _lastBirdAdded > 3)
+    if( currentTime - _lasticeAdded > 3)
     {
-        _lastBirdAdded = currentTime + 3;
-        [self addBird];
-        [self addButterfly];
+        _lasticeAdded = currentTime + 3;
+        [self addice];
+        [self addOlaf];
     }
     
-   // [self moveShip];
-    [self moveBg];
-    [self moveBirds];
-
+    [self moveBgFrozen];
+    [self moveice];
+    
 }
 
 
 - (void)didSimulatePhysics {
-    [self enumerateChildNodesWithName:@"ship" usingBlock:^(SKNode *node, BOOL *stop) {
+    [self enumerateChildNodesWithName:@"elsa" usingBlock:^(SKNode *node, BOOL *stop) {
         if (node.position.y <= 0) {
             node.physicsBody.velocity = CGVectorMake(0, -(5*node.physicsBody.velocity.dy)/6);
         }
@@ -275,7 +263,7 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
         if (node.position.y > self.size.height) {
             node.position = CGPointMake(self.size.width/3, self.size.height);
             node.physicsBody.velocity = CGVectorMake(0, 0);
-
+            
         }
     }];
 }
@@ -295,19 +283,19 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
         secondBody = contact.bodyA;
     }
     
-    if ((firstBody.categoryBitMask & shipCategory) != 0 &&
+    if ((firstBody.categoryBitMask & elsaCategory) != 0 &&
         (secondBody.categoryBitMask & obstacleCategory) != 0) {
         
         [GameState sharedInstance].life -= 50;
         [secondBody.node removeFromParent];
         [_lblLife setText:[NSString stringWithFormat:@"Life: %d", [GameState sharedInstance].life]];
         if ([GameState sharedInstance].life <= 0) {
-            [self endGame];
+            [self endGameFrozen];
         }
     }
     
-    if ((firstBody.categoryBitMask & shipCategory) != 0 &&
-        (secondBody.categoryBitMask & butterflyCategory) != 0) {
+    if ((firstBody.categoryBitMask & elsaCategory) != 0 &&
+        (secondBody.categoryBitMask & olafCategory) != 0) {
         
         [GameState sharedInstance].score += 5;
         [secondBody.node removeFromParent];
@@ -315,10 +303,10 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     }
 }
 
--(void)endGame {
+-(void)endGameFrozen {
     
-    [ship removeFromParent];
-    gameOver = YES;
+    [elsa removeFromParent];
+    gameOverFrozen = YES;
     
     // Save high score
     [[GameState sharedInstance] saveState];

@@ -12,6 +12,13 @@
 		651E9C0C1917D01900F7EB47 /* bee.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C0B1917D01900F7EB47 /* bee.png */; };
 		651E9C0E1917D08D00F7EB47 /* tigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C0D1917D08D00F7EB47 /* tigger.png */; };
 		651E9C101917D27500F7EB47 /* Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C0F1917D27500F7EB47 /* Landscape.png */; };
+		651E9C131917FE8F00F7EB47 /* Directions.m in Sources */ = {isa = PBXBuildFile; fileRef = 651E9C121917FE8F00F7EB47 /* Directions.m */; };
+		651E9C161918056200F7EB47 /* characters.m in Sources */ = {isa = PBXBuildFile; fileRef = 651E9C151918056200F7EB47 /* characters.m */; };
+		651E9C19191820C400F7EB47 /* Frozen.m in Sources */ = {isa = PBXBuildFile; fileRef = 651E9C18191820C400F7EB47 /* Frozen.m */; };
+		651E9C1B1918225500F7EB47 /* elsa.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C1A1918225500F7EB47 /* elsa.png */; };
+		651E9C1D1918315100F7EB47 /* olaf.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C1C1918315100F7EB47 /* olaf.png */; };
+		651E9C1F1918327800F7EB47 /* ice.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C1E1918327800F7EB47 /* ice.png */; };
+		651E9C21191835A100F7EB47 /* frozen.png in Resources */ = {isa = PBXBuildFile; fileRef = 651E9C20191835A000F7EB47 /* frozen.png */; };
 		65C7C1E818F76944005991E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C7C1E718F76944005991E1 /* Foundation.framework */; };
 		65C7C1EA18F76944005991E1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C7C1E918F76944005991E1 /* CoreGraphics.framework */; };
 		65C7C1EC18F76944005991E1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C7C1EB18F76944005991E1 /* UIKit.framework */; };
@@ -54,6 +61,16 @@
 		651E9C0B1917D01900F7EB47 /* bee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bee.png; path = ../../bee.png; sourceTree = "<group>"; };
 		651E9C0D1917D08D00F7EB47 /* tigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tigger.png; path = ../../tigger.png; sourceTree = "<group>"; };
 		651E9C0F1917D27500F7EB47 /* Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Landscape.png; path = ../../Landscape.png; sourceTree = "<group>"; };
+		651E9C111917FE8F00F7EB47 /* Directions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Directions.h; sourceTree = "<group>"; };
+		651E9C121917FE8F00F7EB47 /* Directions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Directions.m; sourceTree = "<group>"; };
+		651E9C141918056200F7EB47 /* characters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = characters.h; sourceTree = "<group>"; };
+		651E9C151918056200F7EB47 /* characters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = characters.m; sourceTree = "<group>"; };
+		651E9C17191820C400F7EB47 /* Frozen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frozen.h; sourceTree = "<group>"; };
+		651E9C18191820C400F7EB47 /* Frozen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frozen.m; sourceTree = "<group>"; };
+		651E9C1A1918225500F7EB47 /* elsa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = elsa.png; path = ../../elsa.png; sourceTree = "<group>"; };
+		651E9C1C1918315100F7EB47 /* olaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = olaf.png; path = ../../olaf.png; sourceTree = "<group>"; };
+		651E9C1E1918327800F7EB47 /* ice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ice.png; path = ../../ice.png; sourceTree = "<group>"; };
+		651E9C20191835A000F7EB47 /* frozen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frozen.png; path = ../../frozen.png; sourceTree = "<group>"; };
 		65C7C1E418F76944005991E1 /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C7C1E718F76944005991E1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65C7C1E918F76944005991E1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -156,14 +173,24 @@
 				65C7C20218F76944005991E1 /* ViewController.m */,
 				65C7C20418F76944005991E1 /* MyScene.h */,
 				65C7C20518F76944005991E1 /* MyScene.m */,
+				651E9C17191820C400F7EB47 /* Frozen.h */,
+				651E9C18191820C400F7EB47 /* Frozen.m */,
+				651E9C111917FE8F00F7EB47 /* Directions.h */,
+				651E9C121917FE8F00F7EB47 /* Directions.m */,
 				65C7C22F18FC92F0005991E1 /* GameOver.h */,
 				65C7C23018FC92F0005991E1 /* GameOver.m */,
 				65C7C23218FDE8D1005991E1 /* StartGame.h */,
 				65C7C23318FDE8D1005991E1 /* StartGame.m */,
+				651E9C141918056200F7EB47 /* characters.h */,
+				651E9C151918056200F7EB47 /* characters.m */,
 				65C7C22C18FC8571005991E1 /* GameState.h */,
 				65C7C22D18FC8571005991E1 /* GameState.m */,
 				65C7C22618F857EE005991E1 /* bg.png */,
 				651E9C0B1917D01900F7EB47 /* bee.png */,
+				651E9C1A1918225500F7EB47 /* elsa.png */,
+				651E9C1E1918327800F7EB47 /* ice.png */,
+				651E9C1C1918315100F7EB47 /* olaf.png */,
+				651E9C20191835A000F7EB47 /* frozen.png */,
 				651E9C0D1917D08D00F7EB47 /* tigger.png */,
 				651E9C0F1917D27500F7EB47 /* Landscape.png */,
 				651E9C0919173ACB00F7EB47 /* honey.png */,
@@ -284,16 +311,20 @@
 			files = (
 				65C7C22B18FC5EA4005991E1 /* Butterfly.png in Resources */,
 				65C7C20818F76945005991E1 /* Spaceship.png in Resources */,
+				651E9C1D1918315100F7EB47 /* olaf.png in Resources */,
 				651E9C041916EEAB00F7EB47 /* ball.png in Resources */,
+				651E9C1F1918327800F7EB47 /* ice.png in Resources */,
 				651E9C0C1917D01900F7EB47 /* bee.png in Resources */,
 				65C7C20A18F76945005991E1 /* Images.xcassets in Resources */,
 				651E9C101917D27500F7EB47 /* Landscape.png in Resources */,
 				65C7C22718F857EE005991E1 /* bg.png in Resources */,
 				651E9C0A19173ACB00F7EB47 /* honey.png in Resources */,
+				651E9C1B1918225500F7EB47 /* elsa.png in Resources */,
 				65C7C20018F76944005991E1 /* Main_iPad.storyboard in Resources */,
 				65C7C1FD18F76944005991E1 /* Main_iPhone.storyboard in Resources */,
 				651E9C0E1917D08D00F7EB47 /* tigger.png in Resources */,
 				65C7C22918FC5490005991E1 /* red-missile.png in Resources */,
+				651E9C21191835A100F7EB47 /* frozen.png in Resources */,
 				65C7C1F418F76944005991E1 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,8 +347,11 @@
 				65C7C20618F76944005991E1 /* MyScene.m in Sources */,
 				65C7C20318F76944005991E1 /* ViewController.m in Sources */,
 				65C7C1FA18F76944005991E1 /* AppDelegate.m in Sources */,
+				651E9C131917FE8F00F7EB47 /* Directions.m in Sources */,
 				65C7C23118FC92F1005991E1 /* GameOver.m in Sources */,
+				651E9C161918056200F7EB47 /* characters.m in Sources */,
 				65C7C1F618F76944005991E1 /* main.m in Sources */,
+				651E9C19191820C400F7EB47 /* Frozen.m in Sources */,
 				65C7C22E18FC8571005991E1 /* GameState.m in Sources */,
 				65C7C23418FDE8D1005991E1 /* StartGame.m in Sources */,
 			);

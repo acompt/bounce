@@ -7,24 +7,14 @@
 //
 
 #import "GameOver.h"
-#import "MyScene.h"
+#import "characters.h"
+#import "StartGame.h"
 
 @implementation GameOver
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        /*
-        SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"Star"];
-        star.position = CGPointMake(25, self.size.height-30);
-        [self addChild:star];
-        SKLabelNode *lblStars = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
-        lblStars.fontSize = 30;
-        lblStars.fontColor = [SKColor whiteColor];
-        lblStars.position = CGPointMake(50, self.size.height-40);
-        lblStars.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        [lblStars setText:[NSString stringWithFormat:@"X %d", [GameState sharedInstance].stars]];
-        [self addChild:lblStars];
-         */
+        self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:.3 alpha:.5];
         
         // Score
         SKLabelNode *lblScore = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
@@ -39,7 +29,7 @@
         SKLabelNode *lblHighScore = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
         lblHighScore.fontSize = 30;
         lblHighScore.fontColor = [SKColor cyanColor];
-        lblHighScore.position = CGPointMake(size.width/2, 100);
+        lblHighScore.position = CGPointMake(size.width/2, 150);
         lblHighScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
         [lblHighScore setText:[NSString stringWithFormat:@"High Score: %d", [GameState sharedInstance].highScore]];
         [self addChild:lblHighScore];
@@ -47,11 +37,22 @@
         // Try again
         SKLabelNode *lblTryAgain = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
         lblTryAgain.fontSize = 30;
+        lblTryAgain.name = @"again";
         lblTryAgain.fontColor = [SKColor whiteColor];
-        lblTryAgain.position = CGPointMake(size.width/2, 50);
+        lblTryAgain.position = CGPointMake(size.width/2, 100);
         lblTryAgain.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
         [lblTryAgain setText:@"Tap To Try Again"];
         [self addChild:lblTryAgain];
+        
+        // Main Menu
+        SKLabelNode *menu = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
+        menu.fontSize = 30;
+        menu.name = @"menu";
+        menu.fontColor = [SKColor whiteColor];
+        menu.position = CGPointMake(size.width/2, 50);
+        menu.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+        [menu setText:@"Main Menu"];
+        [self addChild:menu];
     }
     return self;
 }
@@ -59,10 +60,25 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // Transition back to the Game
-    SKScene *myScene = [[MyScene alloc] initWithSize:self.size];
-    SKTransition *reveal = [SKTransition fadeWithDuration:0.5];
-    [self.view presentScene:myScene transition:reveal];
+    for (UITouch *touch in touches) {
+        SKNode *n = [self nodeAtPoint:[touch locationInNode:self]];
+        if (n != self && [n.name isEqual: @"menu"]) {
+            // Transition back to the Game
+            SKScene *myScene = [[StartGame alloc] initWithSize:self.size];
+            
+            SKTransition *reveal = [SKTransition fadeWithDuration:0.5];
+            [self.view presentScene:myScene transition:reveal];
+            return;
+        }
+        if (n != self && [n.name isEqual: @"again"]) {
+            // Transition back to the Game
+            SKScene *myScene = [[characters alloc] initWithSize:self.size];
+            
+            SKTransition *reveal = [SKTransition fadeWithDuration:0.5];
+            [self.view presentScene:myScene transition:reveal];
+            return;
+        }
+    }
 }
 
 @end

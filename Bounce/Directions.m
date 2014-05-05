@@ -1,52 +1,41 @@
 //
-//  StartGame.m
+//  Directions.m
 //  Bounce
 //
-//  Created by Andrea Compton on 4/15/14.
+//  Created by Andrea Compton on 5/5/14.
 //  Copyright (c) 2014 Bounce. All rights reserved.
 //
 
-#import "StartGame.h"
-#import "characters.h"
 #import "Directions.h"
+#import "StartGame.h"
 
-@implementation StartGame
+@implementation Directions
 
 -(id)initWithSize:(CGSize)size {
-
+    
     if (self = [super initWithSize:size]) {
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:.3 alpha:.5];
         // Title
         
         SKLabelNode *lblTitle = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
-        lblTitle.fontSize = 60;
+        lblTitle.fontSize = 15;
         lblTitle.fontColor = [SKColor whiteColor];
         lblTitle.position = CGPointMake(size.width/2, 200);
         lblTitle.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-        [lblTitle setText:@"Bounce"];
+        [lblTitle setText:@"Tap the screen to change the height of your character's bounce"];
         [self addChild:lblTitle];
-        
-        // Directions
-        SKLabelNode *lblDirections = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
-        lblDirections.name = @"directions";
-        lblDirections.fontSize = 30;
-        lblDirections.fontColor = [SKColor cyanColor];
-        lblDirections.position = CGPointMake(size.width/2, 100);
-        lblDirections.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-        [lblDirections setText:@"Directions"];
-        [self addChild:lblDirections];
         
         // Try again
         SKLabelNode *lblStartGame = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
-        lblStartGame.name = @"startLabel";
+        lblStartGame.name = @"back";
         lblStartGame.fontSize = 30;
         lblStartGame.fontColor = [SKColor whiteColor];
         lblStartGame.position = CGPointMake(size.width/2, 50);
         lblStartGame.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-        [lblStartGame setText:@"Tap To Start"];
+        [lblStartGame setText:@"Back"];
         [self addChild:lblStartGame];
-        
+  
     }
     return self;
 }
@@ -58,25 +47,18 @@
 {
     for (UITouch *touch in touches) {
         SKNode *n = [self nodeAtPoint:[touch locationInNode:self]];
-        if (n != self && [n.name isEqual: @"startLabel"]) {
+        if (n != self && [n.name isEqual: @"back"]) {
             // Transition back to the Game
-            SKScene *myScene = [[characters alloc] initWithSize:self.size];
-            
+            SKScene *Main = [[StartGame alloc] initWithSize:self.size];
             SKTransition *reveal = [SKTransition fadeWithDuration:0.5];
-            [self.view presentScene:myScene transition:reveal];
+            [self.view presentScene: Main transition:reveal];
             return;
         }
-        if (n != self && [n.name isEqual: @"directions"]) {
-            // Transition back to the Game
-            SKScene *myScene = [[Directions alloc] initWithSize:self.size];
-            
-            SKTransition *reveal = [SKTransition fadeWithDuration:0.5];
-            [self.view presentScene:myScene transition:reveal];
-            return;
-        }
+        
     }
     
 }
+
 
 
 @end
